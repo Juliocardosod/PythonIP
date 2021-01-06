@@ -12,47 +12,47 @@ InstanciaSQL = 'SQLBOSCH'
 
 os.system("mode con cols=63 lines=30")
 
-def isAdmin():
+def isAdmin(): #Método para teste administrador
     try:
         is_admin = (os.getuid() == 0)
     except AttributeError:
         is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
     return is_admin
 
-if isAdmin():
+if isAdmin(): #Testa se está em modo administrador
     print("Admin!")
 else:
     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
     cmd = input('')
     os.system('cls')
 
-    if cmd == '@admin':
+    if cmd == '@admin': #Digitando @admin permite acesso ao programa, mesmo sem privilégios de administrador
         print('\n Tá bom, vai lá né :/ ')
         input('')
         os.system('cls')
 
-    else:
+    else: #Senão, sai
         exit()
 
 
 
-def setIP24(IP):
+def setIP24(IP): #Método para configurar IP rapidamente, somente IP e Máscara /24
     subprocess.call('netsh interface ipv4 add address "Ethernet" {} 255.255.255.0'.format(IP))
     time.sleep(1)
     os.system('cls')
 
-def setIP(IP, MK, GT):
+def setIP(IP, MK, GT): #Metodo para configuração manual de IP (Parâmetros herdados)
     subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway = {}'.format(Interface, IP, MK, GT))
     time.sleep(1)
     os.system('cls')
 
-def setDHCP():
+def setDHCP(): #Metodo para setar a interface como DHCP
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
     subprocess.call('netsh interface ip set dns "{}" dhcp'.format(Interface))
     time.sleep(1)
     os.system('cls')
     
-def setIPAuto(NW):
+def setIPAuto(NW): #Método para configuração automática de IP
     ips = NW.split('.')
     ips[3] = cfg.get('IPauto','HOST')
     gtw = ips
@@ -69,7 +69,7 @@ def VAZIO():
     input('\nTem nada aqui não! Oxi :/')
     os.system('cls')
 
-def predefinido():
+def predefinido(): #Menu predefinido integrado ao arquivo config.ini
 
 
     print('''
@@ -116,12 +116,12 @@ def predefinido():
         os.system('cls')
         predefinido()
 
-def setDNS(DNS):
+def setDNS(DNS): #Método para configuração de DNS
     subprocess.call('netsh interface ip set dns "{}" static {}'.format(Interface, DNS))
     time.sleep(1)
     os.system('cls')
 
-def servicos():
+def servicos(): #Menu de serviços
     print('''
 
     -----------------------------------------------------
@@ -170,7 +170,7 @@ def servicos():
         os.system('cls')
         servicos()
 
-def intMan():
+def intMan(): #Menu de gerenciamento de interface
     print('''
 
     -----------------------------------------------------
@@ -209,7 +209,7 @@ def sai():
     input('\nAté a próxima abestado! ;)')#hahahaha
     exit()
 
-def intChange(Intf):
+def intChange(Intf): #Menu para seleção de interface
     print('''
 
     -----------------------------------------------------
@@ -252,7 +252,7 @@ def intChange(Intf):
         os.system('cls')
         intChange(Intf)
 
-def sobre():
+def sobre(): #Sobre o programa
     input('''
 
     -----------------------------------------------------
@@ -272,7 +272,7 @@ def sobre():
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
-while True:
+while True: #Menu principal
     print('''
 
     -----------------------------------------------------
