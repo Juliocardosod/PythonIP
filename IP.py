@@ -120,7 +120,7 @@ def setDNS(DNS): #Método para configuração de DNS
     time.sleep(1)
     os.system('cls')
 
-def srvMAN(NOME, SRV):
+def srvMAN(NOME, SRV): #Habilitar / Desabilitar o serviço selecionado
     print('\n{}'.format(NOME))
     se = input('\nEscolha habilitar ou desabilitar (h/d): ')
     if se == 'h' or se == 'H':
