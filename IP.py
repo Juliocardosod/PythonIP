@@ -7,7 +7,7 @@ from configparser import ConfigParser
 cfg = ConfigParser() 
 print (cfg.read('config.ini')) 
 
-Interface = 'Ethernet'
+Interface = cfg.get('INTERFACES','PRINCIPAL')
 InstanciaSQL = 'SQLBOSCH'
 
 os.system("mode con cols=63 lines=30")
@@ -220,23 +220,23 @@ def intChange(Intf):
                            
             Interface atual {}
            
-            (1) ETHERNET
-            (2) WI-FI
+            (1) {}
+            (2) {}
             (3) INSERIR MANUAL
             (4) VOLTAR
     
     -----------------------------------------------------
-            '''.format(Interface))
+            '''.format(Interface, cfg.get('INTERFACES','PRINCIPAL'), cfg.get('INTERFACES','SECUNDARIA')))
 
     ei = input('Digite uma opção: ')
 
     if ei == '1':
         os.system('cls')
-        return 'Ethernet'
+        return cfg.get('INTERFACES','PRINCIPAL')
         
     elif ei == '2':
         os.system('cls')
-        return 'Wi-Fi'
+        return cfg.get('INTERFACES','SECUNDARIA')
         
     elif ei == '3':
         os.system('cls')
@@ -270,14 +270,14 @@ while True:
             (2) INSERIR IP /24
             (3) INSERIR IP (Manual)
             (4) ADD DNS
-            (5) AUTO IP BB2 (HOST .253)
+            (5) AUTO IP HOST .{}
             (6) MENU PREDEFINIDO
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
 
     -----------------------------------------------------
-            '''.format(Interface))
+            '''.format(Interface, cfg.get('IPauto','HOST')))
     e = input('\nDigite uma opção: ')
     if e == '1':
         os.system('cls')
@@ -308,7 +308,7 @@ while True:
         NW = input('Insira o ip da rede: ')
         os.system('cls')
         setDHCP()
-        setIPAuto(NW, MK)
+        setIPAuto(NW)
         
     elif e == '6':
         os.system('cls')
