@@ -19,20 +19,20 @@ def isAdmin():
         is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
     return is_admin
 
-if isAdmin():
-    print("Admin!")
-else:
-    print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
-    cmd = input('')
-    os.system('cls')
+# if isAdmin():
+#     print("Admin!")
+# else:
+#     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
+#     cmd = input('')
+#     os.system('cls')
 
-    if cmd == '@admin':
-        print('\n Tá bom, vai lá né :/ ')
-        input('')
-        os.system('cls')
+#     if cmd == '@admin':
+#         print('\n Tá bom, vai lá né :/ ')
+#         input('')
+#         os.system('cls')
 
-    else:
-        exit()
+#     else:
+#         exit()
 
 
 
@@ -52,7 +52,7 @@ def setDHCP():
     time.sleep(1)
     os.system('cls')
     
-def setIPbb2(NW, Mask):
+def setIPAuto(NW, Mask):
     ips = NW.split('.')
     ips[3] = '253'
     gtw = ips
@@ -65,8 +65,13 @@ def setIPbb2(NW, Mask):
     time.sleep(1)
     os.system('cls')
 
+def VAZIO():
+    input('\nSlot vazio!')
+    os.system('cls')
+
 def clientes():
-    MK = '255.255.255.0'
+
+
     print('''
 
     -----------------------------------------------------
@@ -76,31 +81,43 @@ def clientes():
           (1) {}
           (2) {}
           (3) {}
-          (4) Voltar
+          (4) {}
+          (9) VOLTAR
+
     //em construção!!!
     -----------------------------------------------------
-    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME')
+    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME')
     ))
     ec = input('Digite uma opção: ')
 
-    if ec == '1':
-        NW = input('Digite o IP da rede (Ex: 192.168.0.0): ')
-        setIPbb2(NW, MK)
+    if ec == '1': #telef
+        setIP(cfg.get('SLOT_1','IP'), cfg.get('SLOT_1','MASK'), cfg.get('SLOT_1','GATE'))
         os.system('cls')
 
-    elif ec == '2':
-        NW = '172.21.1.0'
-        MK = '255.255.0.0'
-        setIPbb2(NW, MK)
+    elif ec == '2': #abb gru
+        setIP(cfg.get('SLOT_2','IP'), cfg.get('SLOT_2','MASK'), cfg.get('SLOT_2','GATE'))
+        setDNS(cfg.get('DEFAULT','DNS'))
         os.system('cls')
 
-    elif ec == '3':
-        NW = '172.21.6.0'
-        MK = '255.255.254.0'
-        setIPbb2(NW, MK)
+    elif ec == '3': #abb sor
+        setIP(cfg.get('SLOT_3','IP'), cfg.get('SLOT_3','MASK'), cfg.get('SLOT_3','GATE'))
+        setDNS(cfg.get('DEFAULT','DNS'))
         os.system('cls')
 
     elif ec == '4':
+        if cfg.get('SLOT_4','NAME') == 'VAZIO':
+            VAZIO()
+            clientes()
+
+        else:
+            IP = cfg.get('SLOT_4','IP')
+            MK = cfg.get('SLOT_4','MASK')
+            GT = cfg.get('SLOT_4','GATE')
+            setIP(IP, MK, GT)
+            setDNS(cfg.get('DEFAULT','DNS'))
+            os.system('cls')
+
+    elif ec == '9':
         os.system('cls')
 
     elif ec == 'exit':
@@ -110,6 +127,7 @@ def clientes():
     else:
         os.system('cls')
         clientes()
+
       
 
 def setDNS(DNS):
@@ -303,7 +321,7 @@ while True:
         NW = input('Insira o ip da rede: ')
         os.system('cls')
         setDHCP()
-        setIPbb2(NW, MK)
+        setIPAuto(NW, MK)
         
     elif e == '6':
         os.system('cls')
