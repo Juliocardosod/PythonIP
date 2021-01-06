@@ -279,6 +279,7 @@ def sobre(): #Sobre o programa
     -----------------------------------------------------
 
     ''')
+    os.system('cls')
 
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
