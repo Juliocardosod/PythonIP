@@ -52,15 +52,15 @@ def setDHCP():
     time.sleep(1)
     os.system('cls')
     
-def setIPAuto(NW, Mask):
+def setIPAuto(NW):
     ips = NW.split('.')
-    ips[3] = '253'
+    ips[3] = cfg.get('IPauto','HOST')
     gtw = ips
-    gtw[3] = '254'
+    gtw[3] = cfg.get('IPauto','GATE')
     ipj = '.'.join(ips)
     gtw = '.'.join(gtw)
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
-    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway={}'.format(Interface, ipj, Mask, gtw))
+    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway={}'.format(Interface, ipj, cfg.get('IPauto','MASK'), gtw))
     subprocess.call('netsh interface ip set dns "{}" static 8.8.8.8'.format(Interface))
     time.sleep(1)
     os.system('cls')
@@ -69,7 +69,7 @@ def VAZIO():
     input('\nTem nada aqui não! Oxi :/')
     os.system('cls')
 
-def clientes():
+def predefinido():
 
 
     print('''
@@ -99,7 +99,7 @@ def clientes():
     if ec in listaEC:
         if (cfg.get('SLOT_{}'.format(ec),'NAME')) == 'VAZIO':
             VAZIO()
-            clientes()
+            predefinido()
         else:
             setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
             setDNS(cfg.get('DEFAULT','DNS'))
@@ -114,7 +114,7 @@ def clientes():
 
     else:
         os.system('cls')
-        clientes()
+        predefinido()
 
       
 
@@ -258,7 +258,6 @@ def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
 while True:
-    MK = '255.255.255.0'
     print('''
 
     -----------------------------------------------------
@@ -313,7 +312,7 @@ while True:
         
     elif e == '6':
         os.system('cls')
-        clientes()
+        predefinido()
         
     elif e == '7':
         os.system('cls')
