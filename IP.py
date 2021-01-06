@@ -8,7 +8,6 @@ cfg = ConfigParser()
 print (cfg.read('config.ini')) 
 
 Interface = cfg.get('INTERFACES','PRINCIPAL')
-InstanciaSQL = 'SQLBOSCH'
 
 os.system("mode con cols=63 lines=30")
 
