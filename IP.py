@@ -2,6 +2,10 @@ import subprocess
 import ctypes
 import os
 import time
+from configparser import ConfigParser 
+
+cfg = ConfigParser() 
+print (cfg.read('config.ini')) 
 
 Interface = 'Ethernet'
 InstanciaSQL = 'SQLBOSCH'
@@ -69,13 +73,14 @@ def clientes():
 
           Menu Clientes
 
-          (1) Telefonica
-          (2) ABB Guarulhos
-          (3) ABB Sorocaba
+          (1) {}
+          (2) {}
+          (3) {}
           (4) Voltar
     //em construção!!!
     -----------------------------------------------------
-    ''')
+    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME')
+    ))
     ec = input('Digite uma opção: ')
 
     if ec == '1':
