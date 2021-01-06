@@ -121,6 +121,24 @@ def setDNS(DNS): #Método para configuração de DNS
     time.sleep(1)
     os.system('cls')
 
+def srvMAN(NOME, SRV):
+    print('\n{}'.format(NOME))
+    se = input('\nEscolha habilitar ou desabilitar (h/d): ')
+    if se == 'h' or se == 'H':
+        os.system('net start {}'.format(SRV))
+        time.sleep(1)
+        os.system('cls')
+        servicos()
+    elif se == 'd' or se == 'D':
+        os.system('net stop {}'.format(SRV))
+        time.sleep(1)
+        os.system('cls')
+        servicos()
+    else:
+        servicos()
+        os.system('cls')
+        servicos()
+
 def servicos(): #Menu de serviços
     print('''
 
@@ -128,38 +146,31 @@ def servicos(): #Menu de serviços
 
         GERENCIAMENTO DE SERVIÇOS
 
-        (1) SQL
-        (2) 
-        (3) VOLTAR
-    //em construção!!!
+        (1) {}
+        (2) {}
+        (3) {}
+        (4) {}
+        (5) VOLTAR
+    
     
     -----------------------------------------------------
 
-    ''')
+    '''.format(cfg.get('SRV_1','NOME'), cfg.get('SRV_2','NOME'), cfg.get('SRV_3','NOME'), cfg.get('SRV_4','NOME') ))
     es = input('Digite a opção: ')
 
-    if es == '1':
-        print('\nSERVIÇO SQL')
-        se = input('\nEscolha habilitar ou desabilitar (h/d): ')
-        if se == 'h' or se == 'H':
-            os.system('net start {}'.format(InstanciaSQL))
-            time.sleep(1)
-            os.system('cls')
-            servicos()
-        elif se == 'd' or se == 'D':
-            os.system('net stop {}'.format(InstanciaSQL))
-            time.sleep(1)
-            os.system('cls')
+    listaES = ['1', '2', '3', '4']
+
+    if es in listaES:
+
+        if (cfg.get('SRV_{}'.format(es),'SRV')) == 'VAZIO':
+            VAZIO()
             servicos()
         else:
-            servicos()
-        os.system('cls')
-        servicos()
-        
-    elif es == '2':
-        os.system('cls')
+            srvMAN(cfg.get('SRV_{}'.format(es),'NOME'), cfg.get('SRV_{}'.format(es),'SRV'))
+            os.system('cls')
 
-    elif es == '3':
+
+    elif es == '5':
         os.system('cls')
 
     elif es == 'exit':
@@ -290,8 +301,8 @@ while True: #Menu principal
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
-
-            (10)Sobre
+            (Sobre)
+            
     -----------------------------------------------------
             '''.format(Interface, cfg.get('IPauto','HOST')))
     e = input('\nDigite uma opção: ')
@@ -341,11 +352,11 @@ while True: #Menu principal
     elif e == '9':
         exit()
     
-    elif e == '10':
+    elif e == 'Sobre' or e == 'sobre':
         os.system('cls')
         sobre()
 
-    elif e == 'serv':
+    elif e == 'srv': #Opção oculta - Serviços
         os.system('cls')
         servicos()
 
