@@ -19,20 +19,20 @@ def isAdmin():
         is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
     return is_admin
 
-# if isAdmin():
-#     print("Admin!")
-# else:
-#     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
-#     cmd = input('')
-#     os.system('cls')
+if isAdmin():
+    print("Admin!")
+else:
+    print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
+    cmd = input('')
+    os.system('cls')
 
-#     if cmd == '@admin':
-#         print('\n Tá bom, vai lá né :/ ')
-#         input('')
-#         os.system('cls')
+    if cmd == '@admin':
+        print('\n Tá bom, vai lá né :/ ')
+        input('')
+        os.system('cls')
 
-#     else:
-#         exit()
+    else:
+        exit()
 
 
 
@@ -115,8 +115,6 @@ def predefinido():
     else:
         os.system('cls')
         predefinido()
-
-      
 
 def setDNS(DNS):
     subprocess.call('netsh interface ip set dns "{}" static {}'.format(Interface, DNS))
@@ -254,6 +252,20 @@ def intChange(Intf):
         os.system('cls')
         intChange(Intf)
 
+def sobre():
+    input('''
+
+    -----------------------------------------------------
+
+           Desenvolvido por Júlio Cardoso
+
+           Ano 2020
+           Sim, foi na quarentena mesmo :)
+    
+    -----------------------------------------------------
+
+    ''')
+
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
@@ -276,6 +288,7 @@ while True:
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
 
+            (10)Sobre
     -----------------------------------------------------
             '''.format(Interface, cfg.get('IPauto','HOST')))
     e = input('\nDigite uma opção: ')
@@ -324,6 +337,10 @@ while True:
         
     elif e == '9':
         exit()
+    
+    elif e == '10':
+        os.system('cls')
+        sobre()
 
     elif e == 'serv':
         os.system('cls')
