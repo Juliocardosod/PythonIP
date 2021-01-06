@@ -2,12 +2,8 @@ import subprocess
 import ctypes
 import os
 import time
-from configparser import ConfigParser 
 
-cfg = ConfigParser() 
-print (cfg.read('config.ini')) 
-
-Interface = cfg.get('INTERFACES','PRINCIPAL')
+Interface = 'Ethernet'
 InstanciaSQL = 'SQLBOSCH'
 
 os.system("mode con cols=63 lines=30")
@@ -52,60 +48,54 @@ def setDHCP():
     time.sleep(1)
     os.system('cls')
     
-def setIPAuto(NW):
+def setIPbb2(NW, Mask):
     ips = NW.split('.')
-    ips[3] = cfg.get('IPauto','HOST')
+    ips[3] = '253'
     gtw = ips
-    gtw[3] = cfg.get('IPauto','GATE')
+    gtw[3] = '254'
     ipj = '.'.join(ips)
     gtw = '.'.join(gtw)
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
-    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway={}'.format(Interface, ipj, cfg.get('IPauto','MASK'), gtw))
+    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway={}'.format(Interface, ipj, Mask, gtw))
     subprocess.call('netsh interface ip set dns "{}" static 8.8.8.8'.format(Interface))
     time.sleep(1)
     os.system('cls')
 
-def VAZIO():
-    input('\nTem nada aqui não! Oxi :/')
-    os.system('cls')
-
-def predefinido():
-
-
+def clientes():
+    MK = '255.255.255.0'
     print('''
 
     -----------------------------------------------------
 
-          Menu Predefinido
+          Menu Clientes
 
-          (1) {}
-          (2) {}
-          (3) {}
-          (4) {}
-          (5) {}
-          (6) {}
-          (7) {}
-          (8) {}
-          (9) VOLTAR
-
+          (1) Telefonica
+          (2) ABB Guarulhos
+          (3) ABB Sorocaba
+          (4) Voltar
+    //em construção!!!
     -----------------------------------------------------
-    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME'),
-    cfg.get('SLOT_5','NAME'), cfg.get('SLOT_6','NAME'), cfg.get('SLOT_7','NAME'), cfg.get('SLOT_8','NAME')
-    ))
+    ''')
     ec = input('Digite uma opção: ')
 
-    listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
+    if ec == '1':
+        NW = input('Digite o IP da rede (Ex: 192.168.0.0): ')
+        setIPbb2(NW, MK)
+        os.system('cls')
 
-    if ec in listaEC:
-        if (cfg.get('SLOT_{}'.format(ec),'NAME')) == 'VAZIO':
-            VAZIO()
-            predefinido()
-        else:
-            setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
-            setDNS(cfg.get('DEFAULT','DNS'))
-            os.system('cls')
+    elif ec == '2':
+        NW = '172.21.1.0'
+        MK = '255.255.0.0'
+        setIPbb2(NW, MK)
+        os.system('cls')
 
-    elif ec == '9':
+    elif ec == '3':
+        NW = '172.21.6.0'
+        MK = '255.255.254.0'
+        setIPbb2(NW, MK)
+        os.system('cls')
+
+    elif ec == '4':
         os.system('cls')
 
     elif ec == 'exit':
@@ -114,7 +104,8 @@ def predefinido():
 
     else:
         os.system('cls')
-        predefinido()
+        clientes()
+      
 
 def setDNS(DNS):
     subprocess.call('netsh interface ip set dns "{}" static {}'.format(Interface, DNS))
@@ -218,23 +209,23 @@ def intChange(Intf):
                            
             Interface atual {}
            
-            (1) {}
-            (2) {}
+            (1) ETHERNET
+            (2) WI-FI
             (3) INSERIR MANUAL
             (4) VOLTAR
     
     -----------------------------------------------------
-            '''.format(Interface, cfg.get('INTERFACES','PRINCIPAL'), cfg.get('INTERFACES','SECUNDARIA')))
+            '''.format(Interface))
 
     ei = input('Digite uma opção: ')
 
     if ei == '1':
         os.system('cls')
-        return cfg.get('INTERFACES','PRINCIPAL')
+        return 'Ethernet'
         
     elif ei == '2':
         os.system('cls')
-        return cfg.get('INTERFACES','SECUNDARIA')
+        return 'Wi-Fi'
         
     elif ei == '3':
         os.system('cls')
@@ -252,27 +243,11 @@ def intChange(Intf):
         os.system('cls')
         intChange(Intf)
 
-def sobre():
-    input('''
-
-    -----------------------------------------------------
-
-    Desenvolvido por Júlio Cardoso
-
-    Ano 2020
-    Sim, foi na quarentena mesmo :)
-
-    Na pasta do programa há o arquivo config.ini com os
-    parâmetros padrões do programa
-    
-    -----------------------------------------------------
-
-    ''')
-
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
 while True:
+    MK = '255.255.255.0'
     print('''
 
     -----------------------------------------------------
@@ -285,15 +260,14 @@ while True:
             (2) INSERIR IP /24
             (3) INSERIR IP (Manual)
             (4) ADD DNS
-            (5) AUTO IP HOST .{}
-            (6) MENU PREDEFINIDO
+            (5) AUTO IP BB2 (HOST .253)
+            (6) MENU CLIENTES
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
 
-            (10)Sobre
     -----------------------------------------------------
-            '''.format(Interface, cfg.get('IPauto','HOST')))
+            '''.format(Interface))
     e = input('\nDigite uma opção: ')
     if e == '1':
         os.system('cls')
@@ -324,11 +298,11 @@ while True:
         NW = input('Insira o ip da rede: ')
         os.system('cls')
         setDHCP()
-        setIPAuto(NW)
+        setIPbb2(NW, MK)
         
     elif e == '6':
         os.system('cls')
-        predefinido()
+        clientes()
         
     elif e == '7':
         os.system('cls')
@@ -340,10 +314,6 @@ while True:
         
     elif e == '9':
         exit()
-    
-    elif e == '10':
-        os.system('cls')
-        sobre()
 
     elif e == 'serv':
         os.system('cls')
