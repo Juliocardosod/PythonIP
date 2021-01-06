@@ -261,6 +261,9 @@ def sobre():
 
            Ano 2020
            Sim, foi na quarentena mesmo :)
+
+           Na pasta do programa há o arquivo config.ini que pode ser editado
+           Este aquivo possui os parâmetros utilizados no programa
     
     -----------------------------------------------------
 
