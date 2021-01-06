@@ -66,7 +66,7 @@ def setIPAuto(NW, Mask):
     os.system('cls')
 
 def VAZIO():
-    input('\nSlot vazio!')
+    input('\nTem nada aqui não! Oxi :/')
     os.system('cls')
 
 def clientes():
@@ -76,44 +76,32 @@ def clientes():
 
     -----------------------------------------------------
 
-          Menu Clientes
+          Menu Predefinido
 
           (1) {}
           (2) {}
           (3) {}
           (4) {}
+          (5) {}
+          (6) {}
+          (7) {}
+          (8) {}
           (9) VOLTAR
 
-    //em construção!!!
     -----------------------------------------------------
-    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME')
+    '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME'),
+    cfg.get('SLOT_5','NAME'), cfg.get('SLOT_6','NAME'), cfg.get('SLOT_7','NAME'), cfg.get('SLOT_8','NAME')
     ))
     ec = input('Digite uma opção: ')
 
-    if ec == '1': #telef
-        setIP(cfg.get('SLOT_1','IP'), cfg.get('SLOT_1','MASK'), cfg.get('SLOT_1','GATE'))
-        os.system('cls')
+    listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
 
-    elif ec == '2': #abb gru
-        setIP(cfg.get('SLOT_2','IP'), cfg.get('SLOT_2','MASK'), cfg.get('SLOT_2','GATE'))
-        setDNS(cfg.get('DEFAULT','DNS'))
-        os.system('cls')
-
-    elif ec == '3': #abb sor
-        setIP(cfg.get('SLOT_3','IP'), cfg.get('SLOT_3','MASK'), cfg.get('SLOT_3','GATE'))
-        setDNS(cfg.get('DEFAULT','DNS'))
-        os.system('cls')
-
-    elif ec == '4':
-        if cfg.get('SLOT_4','NAME') == 'VAZIO':
+    if ec in listaEC:
+        if (cfg.get('SLOT_{}'.format(ec),'NAME')) == 'VAZIO':
             VAZIO()
             clientes()
-
         else:
-            IP = cfg.get('SLOT_4','IP')
-            MK = cfg.get('SLOT_4','MASK')
-            GT = cfg.get('SLOT_4','GATE')
-            setIP(IP, MK, GT)
+            setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
             setDNS(cfg.get('DEFAULT','DNS'))
             os.system('cls')
 
@@ -284,7 +272,7 @@ while True:
             (3) INSERIR IP (Manual)
             (4) ADD DNS
             (5) AUTO IP BB2 (HOST .253)
-            (6) MENU CLIENTES
+            (6) MENU PREDEFINIDO
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
