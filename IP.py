@@ -2,7 +2,8 @@ import subprocess
 import ctypes
 import os
 import time
-from configparser import ConfigParser 
+from configparser import ConfigParser
+import sys
 
 cfg = ConfigParser() 
 print (cfg.read('config.ini')) 
@@ -96,7 +97,7 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
     listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
 
     if ec in listaEC:
-        if (cfg.get('SLOT_{}'.format(ec),'NAME')) == 'VAZIO':
+        if (cfg.get('SLOT_{}'.format(ec),'IP')) == 'VAZIO':
             VAZIO()
             predefinido()
         else:
@@ -122,21 +123,25 @@ def setDNS(DNS): #Método para configuração de DNS
 
 def srvMAN(NOME, SRV): #Habilitar / Desabilitar o serviço selecionado
     print('\n{}'.format(NOME))
-    se = input('\nEscolha habilitar ou desabilitar (h/d): ')
-    if se == 'h' or se == 'H':
-        os.system('net start {}'.format(SRV))
-        time.sleep(1)
-        os.system('cls')
-        servicos()
-    elif se == 'd' or se == 'D':
-        os.system('net stop {}'.format(SRV))
-        time.sleep(1)
-        os.system('cls')
-        servicos()
-    else:
-        servicos()
-        os.system('cls')
-        servicos()
+    try:
+        se = input('\nEscolha habilitar ou desabilitar (h/d): ')
+        if se == 'h' or se == 'H':
+            os.system('net start {}'.format(SRV))
+            time.sleep(1)
+            os.system('cls')
+            servicos()
+        elif se == 'd' or se == 'D':
+            os.system('net stop {}'.format(SRV))
+            time.sleep(1)
+            os.system('cls')
+            servicos()
+        else:
+            servicos()
+            os.system('cls')
+            servicos()
+    except KeyboardInterrupt:
+            os.system('cls')
+            servicos()
 
 def servicos(): #Menu de serviços
     print('''
@@ -149,7 +154,7 @@ def servicos(): #Menu de serviços
         (2) {}
         (3) {}
         (4) {}
-        (5) VOLTAR
+        (9) VOLTAR
     
     
     -----------------------------------------------------
@@ -167,9 +172,10 @@ def servicos(): #Menu de serviços
         else:
             srvMAN(cfg.get('SRV_{}'.format(es),'NOME'), cfg.get('SRV_{}'.format(es),'SRV'))
             os.system('cls')
+            servicos()
 
 
-    elif es == '5':
+    elif es == '9':
         os.system('cls')
 
     elif es == 'exit':
@@ -306,36 +312,49 @@ while True: #Menu principal
     -----------------------------------------------------
             '''.format(Interface, cfg.get('IPauto','HOST')))
     e = input('\nDigite uma opção: ')
+    
     if e == '1':
         os.system('cls')
         setDHCP()
         
     elif e == '2':
-        print()
-        IP = input('digite o IP: ')
-        os.system('cls')
-        setIP24(IP)
+        try:
+            print()
+            IP = input('digite o IP: ')
+            os.system('cls')
+            setIP24(IP)
+        except KeyboardInterrupt:
+            os.system('cls')
         
     elif e == '3':
-        print()
-        IP = input('Digite o IP: ')
-        MK = input('Digite a máscara: ')
-        GT = input('Digite o gateway: ')
-        os.system('cls')
-        setIP(IP, MK, GT)
+        try:
+            print()
+            IP = input('Digite o IP: ')
+            MK = input('Digite a máscara: ')
+            GT = input('Digite o gateway: ')
+            os.system('cls')
+            setIP(IP, MK, GT)
+        except KeyboardInterrupt:
+            os.system('cls')
         
     elif e == '4':
-        print()
-        DNS = input('Digite o DNS: ')
-        os.system('cls')
-        setDNS(DNS)
+        try:
+            print()
+            DNS = input('Digite o DNS: ')
+            os.system('cls')
+            setDNS(DNS)
+        except KeyboardInterrupt:
+            os.system('cls')
         
     elif e == '5':
-        print()
-        NW = input('Insira o ip da rede: ')
-        os.system('cls')
-        setDHCP()
-        setIPAuto(NW)
+        try:
+            print()
+            NW = input('Insira o ip da rede: ')
+            os.system('cls')
+            setDHCP()
+            setIPAuto(NW)
+        except KeyboardInterrupt:
+            os.system('cls')
         
     elif e == '6':
         os.system('cls')
@@ -352,17 +371,18 @@ while True: #Menu principal
     elif e == '9':
         exit()
     
-    elif e == 'Sobre' or e == 'sobre':
+    elif e == 'Sobre' or e == 'sobre' or e == '10':
         os.system('cls')
         sobre()
 
-    elif e == 'srv': #Opção oculta - Serviços
+    elif e == 'srv' or e == 'serviços': #Opção oculta - Serviços
         os.system('cls')
         servicos()
 
     elif e == 'exit':
         os.system('cls')
         sai()
+
     else:
         print('Opção escolhida non exizte!')
         time.sleep(1)
