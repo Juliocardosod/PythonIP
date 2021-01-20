@@ -222,8 +222,19 @@ def intMan(): #Menu de gerenciamento de interface
         intMan()
 
 def sai():
-    input('\nAté a próxima abestado! ;)')#hahahaha
+    input('\nAté a próxima! ;)')
     exit()
+
+def CMD():
+    try:
+        cmd = input('CMD>')
+        if cmd == 'exit':
+            os.system('cls')
+        else:
+            os.system(cmd)
+            CMD()
+    except KeyboardInterrupt:
+            CMD()
 
 def intChange(Intf): #Menu para seleção de interface
     print('''
@@ -282,6 +293,7 @@ def sobre(): #Sobre o programa
     parâmetros padrões do programa
     
     -----------------------------------------------------
+    Comandos adicionais: srv, cmd
 
     ''')
     os.system('cls')
@@ -374,6 +386,10 @@ while True: #Menu principal
     elif e == 'Sobre' or e == 'sobre' or e == '10':
         os.system('cls')
         sobre()
+
+    elif e == 'cmd': #Opção oculta - CMD
+        os.system('cls')
+        CMD()    
 
     elif e == 'srv' or e == 'serviços': #Opção oculta - Serviços
         os.system('cls')
