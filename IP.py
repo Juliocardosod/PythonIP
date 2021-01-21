@@ -20,7 +20,7 @@ def isAdmin(): #Método para teste administrador
     return is_admin
 
 if isAdmin(): #Testa se está em modo administrador
-    print("Admin!")
+    #print("Admin!")
 else:
     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
     cmd = input('')
@@ -55,7 +55,7 @@ def setDHCP(): #Metodo para setar a interface como DHCP
 def setIPAuto(NW): #Método para configuração automática de IP
     ips = NW.split('.')
     ips[3] = cfg.get('IPauto','HOST')
-    gtw = ips
+    gtw = NW.split('.')
     gtw[3] = cfg.get('IPauto','GATE')
     ipj = '.'.join(ips)
     gtw = '.'.join(gtw)
