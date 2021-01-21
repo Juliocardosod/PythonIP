@@ -20,7 +20,7 @@ def isAdmin(): #Método para teste administrador
     return is_admin
 
 if isAdmin(): #Testa se está em modo administrador
-    #print("Admin!")
+    print("")
 else:
     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
     cmd = input('')
