@@ -20,7 +20,7 @@ def isAdmin(): #Método para teste administrador
     return is_admin
 
 if isAdmin(): #Testa se está em modo administrador
-    os.system('cls')
+    print("")
 else:
     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
     cmd = input('')
@@ -279,20 +279,38 @@ def intChange(Intf): #Menu para seleção de interface
         os.system('cls')
         intChange(Intf)
 
+def historico():
+    input('''
+
+    -----------------------------------------------------
+
+    Versão 1.01 - Jan 21
+    Adicionado o modo terminal livre "cmd"
+
+    Versão 1.00 - Jan 21
+    Primeira versão distribuída
+
+    Desenvolvido por Júlio Cardoso
+    
+    -----------------------------------------------------
+    
+
+    ''')
+    os.system('cls')
+
 def sobre(): #Sobre o programa
     input('''
 
     -----------------------------------------------------
 
     Versão 1.01 - Jan 21
+    Adicionado o modo terminal livre "cmd"
 
     Ano 2020 
     Sim, foi na quarentena mesmo :)
 
     Leia o arquivo READEME para mais informações e
     dicas de utilização
-
-    Comandos adicionais: srv, cmd
 
     Desenvolvido por Júlio Cardoso
     
@@ -323,8 +341,9 @@ while True: #Menu principal
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
-            (Sobre)
-            
+
+            (Sobre)                     Versão 1.01
+                                            
     -----------------------------------------------------
             '''.format(Interface, cfg.get('IPauto','HOST')))
     e = input('\nDigite uma opção: ')
@@ -391,9 +410,13 @@ while True: #Menu principal
         os.system('cls')
         sobre()
 
-    elif e == 'cmd': #Opção oculta - CMD
+    elif e == 'cmd' or e == 'CMD': #Opção oculta - CMD
         os.system('cls')
         CMD()    
+
+    elif e == 'historico' or e == 'Historico': #Opção oculta - CMD
+        os.system('cls')
+        historico() 
 
     elif e == 'srv' or e == 'serviços': #Opção oculta - Serviços
         os.system('cls')

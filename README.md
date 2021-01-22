@@ -15,3 +15,5 @@ Há algumas qu podem ser selecionadas no menu como:
 8 - Habilitar / desabilitar interface
 
 A partir da versão 1.01 é possível inserir o comando "CMD" e utilizar o terminal de forma livre. Para sair deste modo, utilize o comando "exit"
+
+Para visualizar o histórico de modificações, utilize o comando "historico" dentro do programa
