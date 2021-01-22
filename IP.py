@@ -20,7 +20,7 @@ def isAdmin(): #Método para teste administrador
     return is_admin
 
 if isAdmin(): #Testa se está em modo administrador
-    print("")
+    os.system('cls')
 else:
     print("\n Você é um simples mortal! \n\n Nao é dígno de usar esse programa!")
     cmd = input('')
@@ -284,16 +284,20 @@ def sobre(): #Sobre o programa
 
     -----------------------------------------------------
 
-    Desenvolvido por Júlio Cardoso
+    Versão 1.01 - Jan 21
 
-    Ano 2020
+    Ano 2020 
     Sim, foi na quarentena mesmo :)
 
-    Na pasta do programa há o arquivo config.ini com os
-    parâmetros padrões do programa
+    Leia o arquivo READEME para mais informações e
+    dicas de utilização
+
+    Comandos adicionais: srv, cmd
+
+    Desenvolvido por Júlio Cardoso
     
     -----------------------------------------------------
-    Comandos adicionais: srv, cmd
+    
 
     ''')
     os.system('cls')
