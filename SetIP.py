@@ -5,8 +5,10 @@ import time
 from configparser import ConfigParser
 import sys
 
-cfg = ConfigParser() 
-print (cfg.read('config.ini')) 
+cfg = ConfigParser()
+print (cfg.read('config.ini'))
+versao = '1.02 beta'
+data = 'Jan 21'
 
 Interface = cfg.get('INTERFACES','PRINCIPAL')
 
@@ -34,16 +36,30 @@ else:
     else: #Senão, sai
         exit()
 
+def createCFG(): #Criar arquivo de configuração caso não exista
+    input('')
+    ##cfg = configparser.ConfigParser() if not config.has_section("INFO"): config.add_section("INFO") config.set("INFO", "link", "www.codeforests.com") config.set("INFO", "name", "ken") with open("example.ini", 'w') as configfile: config.write(configfile)
 
+def setSlot(slot):    #Editar arquivo de configuração
+    nome = input('Digite um nome para o slot:')
+    v1 = input('Digite um valor para IP:')
+    v2 = input('Digite um valor para MASCARA:')    
+    v3 = input('Digite um valor para GATEWAY:')
+    cfg.set("SLOT_{}".format(slot), "NAME", nome)
+    cfg.set("SLOT_{}".format(slot), "IP", v1)
+    cfg.set("SLOT_{}".format(slot), "MASK", v2)
+    cfg.set("SLOT_{}".format(slot), "GATE", v3)
+    input('')
+    os.system('cls')
 
 def setIP24(IP): #Método para configurar IP rapidamente, somente IP e Máscara /24
-    subprocess.call('netsh interface ipv4 add address "Ethernet" {} 255.255.255.0'.format(IP))
+    subprocess.call('netsh interface ipv4 add address "{}" {} 255.255.255.0'.format(Interface, IP))
     time.sleep(1)
     os.system('cls')
 
 def setIP(IP, MK, GT): #Metodo para configuração manual de IP (Parâmetros herdados)
     subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway = {}'.format(Interface, IP, MK, GT))
-    time.sleep(1)
+    time.sleep(2)
     os.system('cls')
 
 def setDHCP(): #Metodo para setar a interface como DHCP
@@ -86,7 +102,7 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
           (6) {}
           (7) {}
           (8) {}
-          (9) VOLTAR
+          (9) VOLTAR        "set" para alterar um slot
 
     -----------------------------------------------------
     '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME'),
@@ -111,6 +127,17 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
     elif ec == 'exit':
         os.system('cls') 
         sai()
+
+    elif ec == 'set' or ec == 'SET' or ec == 'Set':
+        print('\n--------------Configuração de slots-----------------\n')
+        slot = input('Digite o slot a ser alterado:')
+        if slot in listaEC:
+            setSlot(slot)
+            predefinido()
+        else:
+            input('Esse slot não existe!')
+            os.system('cls')
+            predefinido()
 
     else:
         os.system('cls')
@@ -284,6 +311,9 @@ def historico():
 
     -----------------------------------------------------
 
+    Versão 1.02 - Jan 21
+    Configuração de slots predefinidos pelo programa
+
     Versão 1.01 - Jan 21
     Adicionado o modo terminal livre "cmd"
 
@@ -303,7 +333,7 @@ def sobre(): #Sobre o programa
 
     -----------------------------------------------------
 
-    Versão 1.01 - Jan 21
+    Versão {} - {}
     Adicionado o modo terminal livre "cmd"
 
     Ano 2020 
@@ -317,7 +347,7 @@ def sobre(): #Sobre o programa
     -----------------------------------------------------
     
 
-    ''')
+    '''.format(versao, data))
     os.system('cls')
 
 def nadaAqui():
@@ -342,10 +372,10 @@ while True: #Menu principal
             (8) HABILITAR / DESABILITAR INTERFACE
             (9) SAIR
 
-            (Sobre)                     Versão 1.01
+            (Sobre)                     Versão {}
                                             
     -----------------------------------------------------
-            '''.format(Interface, cfg.get('IPauto','HOST')))
+            '''.format(Interface, cfg.get('IPauto','HOST'),versao))
     e = input('\nDigite uma opção: ')
     
     if e == '1':
