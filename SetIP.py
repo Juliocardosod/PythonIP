@@ -41,15 +41,14 @@ def createCFG(): #Criar arquivo de configuração caso não exista
     ##cfg = configparser.ConfigParser() if not config.has_section("INFO"): config.add_section("INFO") config.set("INFO", "link", "www.codeforests.com") config.set("INFO", "name", "ken") with open("example.ini", 'w') as configfile: config.write(configfile)
 
 def setSlot(slot):    #Editar arquivo de configuração
-    nome = input('Digite um nome para o slot:')
-    v1 = input('Digite um valor para IP:')
-    v2 = input('Digite um valor para MASCARA:')    
-    v3 = input('Digite um valor para GATEWAY:')
+    nome = input('Digite um nome para o slot: ')
+    v1 = input('Digite um valor para IP: ')
+    v2 = input('Digite um valor para MASCARA: ')    
+    v3 = input('Digite um valor para GATEWAY: ')
     cfg.set("SLOT_{}".format(slot), "NAME", nome)
     cfg.set("SLOT_{}".format(slot), "IP", v1)
     cfg.set("SLOT_{}".format(slot), "MASK", v2)
     cfg.set("SLOT_{}".format(slot), "GATE", v3)
-    input('')
     os.system('cls')
 
 def setIP24(IP): #Método para configurar IP rapidamente, somente IP e Máscara /24
@@ -274,8 +273,9 @@ def intChange(Intf): #Menu para seleção de interface
            
             (1) {}
             (2) {}
-            (3) INSERIR MANUAL
-            (4) VOLTAR
+            (3) VOLTAR 
+            
+            "set" para configurar as unidades
     
     -----------------------------------------------------
             '''.format(Interface, cfg.get('INTERFACES','PRINCIPAL'), cfg.get('INTERFACES','SECUNDARIA')))
@@ -290,12 +290,31 @@ def intChange(Intf): #Menu para seleção de interface
         os.system('cls')
         return cfg.get('INTERFACES','SECUNDARIA')
         
-    elif ei == '3':
+    elif ei == 'set':
+        print('\n--------------Configuração de slots-----------------\n')
+        slot = input('Escolha a insterface 1 ou 2: ')
+        
+        if slot == '1':    
+            valor1 = input('Digite o nome da interface:')
+            cfg.set('INTERFACES', 'PRINCIPAL', valor1)
+            os.system('cls')
+            intChange()
+        if slot == '2':
+            valor2 = input('Digite o nome da interface:')
+            cfg.set('INTERFACES', 'SECUNDARIA', valor2)
+            os.system('cls')
+            intChange()
+        else:
+            print('Opção incorreta!')
+            time.sleep(1)
+            os.system('cls')
+            intChange()
+            
         os.system('cls')
-        Intf = input('Digite o nome da interface: ')
-        return Intf
+        intChange()
+        
     
-    elif ei == '4':
+    elif ei == '3':
         os.system('cls')
         return Intf    
 
