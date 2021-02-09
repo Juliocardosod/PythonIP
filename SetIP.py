@@ -291,20 +291,20 @@ def intChange(Intf): #Menu para seleção de interface
         os.system('cls')
         return cfg.get('INTERFACES','SECUNDARIA')
         
-    elif ei == 'set':
+    elif ei == 'set' or ei == 'SET':
         print('\n--------------Configuração de slots-----------------\n')
         slot = input('Escolha a insterface 1 ou 2: ')
         
         if slot == '1':    
             valor1 = input('Digite o nome da interface:')
-            cfg.set('INTERFACES', 'PRINCIPAL', valor1)
+            cfg.set("INTERFACES", "PRINCIPAL", valor1)
             os.system('cls')
-            intChange()
+            intChange(Intf)
         if slot == '2':
             valor2 = input('Digite o nome da interface:')
-            cfg.set('INTERFACES', 'SECUNDARIA', valor2)
+            cfg.set("INTERFACES", "SECUNDARIA", valor2)
             os.system('cls')
-            intChange()
+            intChange(Intf)
         else:
             print('Opção incorreta!')
             time.sleep(1)
