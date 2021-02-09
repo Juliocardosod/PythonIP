@@ -5,6 +5,13 @@ import time
 from configparser import ConfigParser
 import sys
 
+def notas():
+    print('''
+    Alterar o método de detecção de slot desabilitado
+    
+    
+    ''')
+
 cfg = ConfigParser()
 #print (cfg.read('config.ini'))
 cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
@@ -38,19 +45,28 @@ else:
         exit()
 
 def createCFG(): #Criar arquivo de configuração caso não exista
-    input('')
-    ##cfg = configparser.ConfigParser() if not config.has_section("INFO"): config.add_section("INFO") config.set("INFO", "link", "www.codeforests.com") config.set("INFO", "name", "ken") with open("example.ini", 'w') as configfile: config.write(configfile)
+    try:
+        print('Arquivo de configuração (config.ini) não encontrado! \nCriando novo arquivo...')
+        input('Código')
+        ##cfg = configparser.ConfigParser() if not config.has_section("INFO"): config.add_section("INFO") config.set("INFO", "link", "www.codeforests.com") config.set("INFO", "name", "ken") with open("example.ini", 'w') as configfile: config.write(configfile)
+        os.system('cls')        
+    except Exception as e: input(e)
+
 
 def setSlot(slot):    #Editar arquivo de configuração
-    nome = input('Digite um nome para o slot: ')
-    v1 = input('Digite um valor para IP: ')
-    v2 = input('Digite um valor para MASCARA: ')    
-    v3 = input('Digite um valor para GATEWAY: ')
-    cfg.set("SLOT_{}".format(slot), "NAME", nome)
-    cfg.set("SLOT_{}".format(slot), "IP", v1)
-    cfg.set("SLOT_{}".format(slot), "MASK", v2)
-    cfg.set("SLOT_{}".format(slot), "GATE", v3)
-    os.system('cls')
+    try:
+        nome = input('Digite um nome para o slot: ')
+        v1 = input('Digite um valor para IP: ')
+        v2 = input('Digite um valor para MASCARA: ')    
+        v3 = input('Digite um valor para GATEWAY: ')
+        cfg.set("SLOT_{}".format(slot), "NAME", nome)
+        cfg.set("SLOT_{}".format(slot), "IP", v1)
+        cfg.set("SLOT_{}".format(slot), "MASK", v2)
+        cfg.set("SLOT_{}".format(slot), "GATE", v3)
+        os.system('cls')
+    except KeyboardInterrupt:
+        os.system('cls')
+        predefinido()
 
 def setIP24(IP): #Método para configurar IP rapidamente, somente IP e Máscara /24
     subprocess.call('netsh interface ipv4 add address "{}" {} 255.255.255.0'.format(Interface, IP))
@@ -82,8 +98,11 @@ def setIPAuto(NW): #Método para configuração automática de IP
     os.system('cls')
 
 def VAZIO():
-    input('\nTem nada aqui não! Oxi :/')
-    os.system('cls')
+    try:
+        input('\nTem nada aqui não! Oxi :/')
+        os.system('cls')
+    except KeyboardInterrupt:
+        os.system('cls')
 
 def predefinido(): #Menu predefinido integrado ao arquivo config.ini
 
@@ -108,40 +127,43 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
     '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME'),
     cfg.get('SLOT_5','NAME'), cfg.get('SLOT_6','NAME'), cfg.get('SLOT_7','NAME'), cfg.get('SLOT_8','NAME')
     ))
-    ec = input('Digite uma opção: ')
+    try:
+        ec = input('Digite uma opção: ')
 
-    listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
+        listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
 
-    if ec in listaEC:
-        if (cfg.get('SLOT_{}'.format(ec),'IP')) == 'VAZIO':
-            VAZIO()
-            predefinido()
-        else:
-            setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
-            setDNS(cfg.get('DEFAULT','DNS'))
+        if ec in listaEC:
+            if (cfg.get('SLOT_{}'.format(ec),'IP')) == 'VAZIO':
+                VAZIO()
+                predefinido()
+            else:
+                setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
+                setDNS(cfg.get('DEFAULT','DNS'))
+                os.system('cls')
+
+        elif ec == '9':
             os.system('cls')
 
-    elif ec == '9':
-        os.system('cls')
+        elif ec == 'exit':
+            os.system('cls') 
+            sai()
 
-    elif ec == 'exit':
-        os.system('cls') 
-        sai()
+        elif ec == 'set' or ec == 'SET' or ec == 'Set':
+            print('\n    --------------Configuração de slots------------------\n')
+            slot = input('Digite o slot a ser alterado:')
+            if slot in listaEC:
+                setSlot(slot)
+                predefinido()
+            else:
+                input('Esse slot não existe!')
+                os.system('cls')
+                predefinido()
 
-    elif ec == 'set' or ec == 'SET' or ec == 'Set':
-        print('\n    --------------Configuração de slots------------------\n')
-        slot = input('Digite o slot a ser alterado:')
-        if slot in listaEC:
-            setSlot(slot)
-            predefinido()
         else:
-            input('Esse slot não existe!')
             os.system('cls')
             predefinido()
-
-    else:
+    except KeyboardInterrupt:
         os.system('cls')
-        predefinido()
 
 def setDNS(DNS): #Método para configuração de DNS
     subprocess.call('netsh interface ip set dns "{}" static {}'.format(Interface, DNS))
@@ -175,43 +197,69 @@ def servicos(): #Menu de serviços
 
     -----------------------------------------------------
 
-        GERENCIAMENTO DE SERVIÇOS
+            GERENCIAMENTO DE SERVIÇOS
 
-        (1) {}
-        (2) {}
-        (3) {}
-        (4) {}
-        (9) VOLTAR
-    
-    
+            (1) {}
+            (2) {}
+            (3) {}
+            (4) {}
+            (5) {}
+            (6) {}
+            (7) {}
+            (8) {}
+            (9) VOLTAR
+
+            "set" para configurar os serviços
     -----------------------------------------------------
 
-    '''.format(cfg.get('SRV_1','NOME'), cfg.get('SRV_2','NOME'), cfg.get('SRV_3','NOME'), cfg.get('SRV_4','NOME') ))
-    es = input('Digite a opção: ')
+    '''.format(cfg.get('SRV_1','NOME'), cfg.get('SRV_2','NOME'), cfg.get('SRV_3','NOME'), cfg.get('SRV_4','NOME'), cfg.get('SRV_5','NOME'), cfg.get('SRV_6','NOME'), cfg.get('SRV_7','NOME'), cfg.get('SRV_8','NOME') ))
+    try:    
+        es = input('Digite a opção: ')
 
-    listaES = ['1', '2', '3', '4']
+        listaES = ['1', '2', '3', '4', '5', '6', '7', '8']
 
-    if es in listaES:
+        if es in listaES:
 
-        if (cfg.get('SRV_{}'.format(es),'SRV')) == 'VAZIO':
-            VAZIO()
-            servicos()
+            if (cfg.get('SRV_{}'.format(es),'SRV')) == 'VAZIO':
+                VAZIO()
+                servicos()
+            else:
+                srvMAN(cfg.get('SRV_{}'.format(es),'NOME'), cfg.get('SRV_{}'.format(es),'SRV'))
+                os.system('cls')
+                servicos()
+
+        elif es == 'set' or es =='SET':
+            try:
+                print('\n    --------------Configuração de slots------------------\n')
+                Sslot = input('Digite o slot a ser alterado:')
+                if Sslot in listaES:
+                    Snome = input('Digite um nome para o slot: ')
+                    SRVNome = input('Digite o nome do serviço: ')
+                    cfg.set("SRV_{}".format(Sslot), "NOME", Snome)
+                    cfg.set("SRV_{}".format(Sslot), "SRV", SRVNome)
+    
+                    os.system('cls')
+                    servicos()
+                else:
+                    input('Esse slot não existe!')
+                    os.system('cls')
+                    servicos()
+            except KeyboardInterrupt:
+                os.system('cls')
+                servicos()
+
+        elif es == '9':
+            os.system('cls')
+
+        elif es == 'exit':
+            os.system('cls')
+            sai()
+
         else:
-            srvMAN(cfg.get('SRV_{}'.format(es),'NOME'), cfg.get('SRV_{}'.format(es),'SRV'))
             os.system('cls')
             servicos()
-
-
-    elif es == '9':
+    except KeyboardInterrupt:
         os.system('cls')
-
-    elif es == 'exit':
-        os.system('cls')
-        sai()
-
-    else:
-        os.system('cls')
-        servicos()
 
 def intMan(): #Menu de gerenciamento de interface
     print('''
@@ -229,25 +277,28 @@ def intMan(): #Menu de gerenciamento de interface
     -----------------------------------------------------
 
     '''.format(Interface))
-    eit = input('Digite a opção: ')
+    try:
+        eit = input('Digite a opção: ')
 
-    if eit == '1':
-        subprocess.call('netsh interface set interface "{}" admin=disable'.format(Interface))
+        if eit == '1':
+            subprocess.call('netsh interface set interface "{}" admin=disable'.format(Interface))
+            os.system('cls')
+            
+        elif eit == '2':
+            subprocess.call('netsh interface set interface "{}" admin=enable'.format(Interface))
+            os.system('cls')
+        elif eit == '3':
+            os.system('cls')
+
+        elif eit == 'exit':
+            os.system('cls')
+            sai()
+        else:
+            os.system('cls')
+            intMan()
+    except KeyboardInterrupt:
         os.system('cls')
         
-    elif eit == '2':
-        subprocess.call('netsh interface set interface "{}" admin=enable'.format(Interface))
-        os.system('cls')
-    elif eit == '3':
-        os.system('cls')
-
-    elif eit == 'exit':
-        os.system('cls')
-        sai()
-    else:
-        os.system('cls')
-        intMan()
-
 def sai():
     input('\nAté a próxima! ;)')
     exit()
@@ -280,8 +331,11 @@ def intChange(Intf): #Menu para seleção de interface
     
     -----------------------------------------------------
             '''.format(Interface, cfg.get('INTERFACES','PRINCIPAL'), cfg.get('INTERFACES','SECUNDARIA')))
-
-    ei = input('Digite uma opção: ')
+    try:
+        ei = input('Digite uma opção: ')
+    except KeyboardInterrupt:
+        os.system('cls')
+        return Intf
 
     if ei == '1':
         os.system('cls')
@@ -293,26 +347,32 @@ def intChange(Intf): #Menu para seleção de interface
         
     elif ei == 'set' or ei == 'SET':
         print('\n--------------Configuração de slots-----------------\n')
-        slot = input('Escolha a insterface 1 ou 2: ')
+        try:
+            slot = input('Escolha a insterface 1 ou 2: ')
+            if slot == '1':    
+                valor1 = input('Digite o nome da interface:')
+                cfg.set("INTERFACES", "PRINCIPAL", valor1)
+                os.system('cls')
+                intChange(Intf)
+            if slot == '2':
+                valor2 = input('Digite o nome da interface:')
+                cfg.set("INTERFACES", "SECUNDARIA", valor2)
+                os.system('cls')
+                intChange(Intf)
+            else:
+                print('Opção incorreta!')
+                time.sleep(1)
+                os.system('cls')
+                intChange(Intf)
+
+        except KeyboardInterrupt:
+            os.system('cls')
+            intChange(Intf)
         
-        if slot == '1':    
-            valor1 = input('Digite o nome da interface:')
-            cfg.set("INTERFACES", "PRINCIPAL", valor1)
-            os.system('cls')
-            intChange(Intf)
-        if slot == '2':
-            valor2 = input('Digite o nome da interface:')
-            cfg.set("INTERFACES", "SECUNDARIA", valor2)
-            os.system('cls')
-            intChange(Intf)
-        else:
-            print('Opção incorreta!')
-            time.sleep(1)
-            os.system('cls')
-            intChange()
+        
             
         os.system('cls')
-        intChange()
+        intChange(Intf)
         
     
     elif ei == '3':
@@ -333,6 +393,8 @@ def historico():
 
     Versão 1.02 - Jan 21
     Configuração de slots predefinidos pelo programa
+    Criação de arquivo config.ini (caso não exista)
+    Aprimoramentos de estabilidade
 
     Versão 1.01 - Jan 21
     Adicionado o modo terminal livre "cmd"
@@ -354,12 +416,11 @@ def sobre(): #Sobre o programa
     -----------------------------------------------------
 
     Versão {} - {}
-    Adicionado o modo terminal livre "cmd"
 
     Ano 2020 
     Sim, foi na quarentena mesmo :)
 
-    Leia o arquivo READEME para mais informações e
+    Leia o arquivo README para mais informações e
     dicas de utilização
 
     Desenvolvido por Júlio Cardoso
@@ -396,90 +457,92 @@ while True: #Menu principal
                                             
     -----------------------------------------------------
             '''.format(Interface, cfg.get('IPauto','HOST'),versao))
-    e = input('\nDigite uma opção: ')
-    
-    if e == '1':
-        os.system('cls')
-        setDHCP()
+    try:
+        e = input('\nDigite uma opção: ')
         
-    elif e == '2':
-        try:
-            print()
-            IP = input('digite o IP: ')
-            os.system('cls')
-            setIP24(IP)
-        except KeyboardInterrupt:
-            os.system('cls')
-        
-    elif e == '3':
-        try:
-            print()
-            IP = input('Digite o IP: ')
-            MK = input('Digite a máscara: ')
-            GT = input('Digite o gateway: ')
-            os.system('cls')
-            setIP(IP, MK, GT)
-        except KeyboardInterrupt:
-            os.system('cls')
-        
-    elif e == '4':
-        try:
-            print()
-            DNS = input('Digite o DNS: ')
-            os.system('cls')
-            setDNS(DNS)
-        except KeyboardInterrupt:
-            os.system('cls')
-        
-    elif e == '5':
-        try:
-            print()
-            NW = input('Insira o ip da rede: ')
+        if e == '1':
             os.system('cls')
             setDHCP()
-            setIPAuto(NW)
-        except KeyboardInterrupt:
+            
+        elif e == '2':
+            try:
+                print()
+                IP = input('digite o IP: ')
+                os.system('cls')
+                setIP24(IP)
+            except KeyboardInterrupt:
+                os.system('cls')
+            
+        elif e == '3':
+            try:
+                print()
+                IP = input('Digite o IP: ')
+                MK = input('Digite a máscara: ')
+                GT = input('Digite o gateway: ')
+                os.system('cls')
+                setIP(IP, MK, GT)
+            except KeyboardInterrupt:
+                os.system('cls')
+            
+        elif e == '4':
+            try:
+                print()
+                DNS = input('Digite o DNS: ')
+                os.system('cls')
+                setDNS(DNS)
+            except KeyboardInterrupt:
+                os.system('cls')
+            
+        elif e == '5':
+            try:
+                print()
+                NW = input('Insira o ip da rede: ')
+                os.system('cls')
+                setDHCP()
+                setIPAuto(NW)
+            except KeyboardInterrupt:
+                os.system('cls')
+            
+        elif e == '6':
             os.system('cls')
+            predefinido()
+            
+        elif e == '7':
+            os.system('cls')
+            Interface = intChange(Interface)
+            
+        elif e == '8':
+            os.system('cls')
+            intMan()
+            
+        elif e == '9':
+            exit()
         
-    elif e == '6':
-        os.system('cls')
-        predefinido()
-        
-    elif e == '7':
-        os.system('cls')
-        Interface = intChange(Interface)
-        
-    elif e == '8':
-        os.system('cls')
-        intMan()
-        
-    elif e == '9':
-        exit()
-    
-    elif e == 'Sobre' or e == 'sobre' or e == '10':
-        os.system('cls')
-        sobre()
+        elif e == 'Sobre' or e == 'sobre' or e == '10':
+            os.system('cls')
+            sobre()
 
-    elif e == 'cmd' or e == 'CMD': #Opção oculta - CMD
+        elif e == 'cmd' or e == 'CMD': #Opção oculta - CMD
+            os.system('cls')
+            CMD()    
+
+        elif e == 'historico' or e == 'Historico': #Opção oculta - CMD
+            os.system('cls')
+            historico() 
+
+        elif e == 'srv' or e == 'SRV': #Opção oculta - Serviços
+            os.system('cls')
+            servicos()
+
+        elif e == 'exit':
+            os.system('cls')
+            sai()
+
+        else:
+            print('Opção escolhida non exizte!')
+            time.sleep(1)
+            os.system('cls')        
+            #nadaAqui()
+    except KeyboardInterrupt:
         os.system('cls')
-        CMD()    
-
-    elif e == 'historico' or e == 'Historico': #Opção oculta - CMD
-        os.system('cls')
-        historico() 
-
-    elif e == 'srv' or e == 'serviços': #Opção oculta - Serviços
-        os.system('cls')
-        servicos()
-
-    elif e == 'exit':
-        os.system('cls')
-        sai()
-
-    else:
-        print('Opção escolhida non exizte!')
-        time.sleep(1)
-        os.system('cls')        
-        #nadaAqui()
-
     

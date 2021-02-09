@@ -14,6 +14,14 @@ Há algumas qu podem ser selecionadas no menu como:
 7 - Alterar interface - Escolher qual interface será alvo da configuração solicitada pelos métodos deste programa
 8 - Habilitar / desabilitar interface
 
-A partir da versão 1.01 é possível inserir o comando "CMD" e utilizar o terminal de forma livre. Para sair deste modo, utilize o comando "exit"
+#### HISTÓRICO ####
 
 Para visualizar o histórico de modificações, utilize o comando "historico" dentro do programa
+
+Versão 1.01 - Jan 21
+    A partir da versão 1.01 é possível inserir o comando "CMD" e utilizar o terminal de forma livre. Para sair deste modo, utilize o comando "exit"
+
+Versão 1.02 - Fev 21
+    Configuração de slots predefinidos pelo programa
+    Criação de arquivo config.ini (caso não exista)
+    Aprimoramentos de estabilidade
