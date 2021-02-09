@@ -128,7 +128,7 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
         sai()
 
     elif ec == 'set' or ec == 'SET' or ec == 'Set':
-        print('\n--------------Configuração de slots-----------------\n')
+        print('\n    --------------Configuração de slots------------------\n')
         slot = input('Digite o slot a ser alterado:')
         if slot in listaEC:
             setSlot(slot)
