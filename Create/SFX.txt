@@ -1,0 +1,16 @@
+;O comentário abaixo contém comando de sequência SFX
+
+Path=SetIP
+SavePath
+Title=SetIP Installer
+Text
+{
+# PythonIP
+
+Este programa foi desenvolvido com o intuito de facilitar o dia-a-dia de seus utilizadores quanto a configuração da interface de rede da máquina.
+
+O programa possui um arquivo de configuração customizável em su apasta (config.ini) para se adequar as necessidades do utilizador
+
+Leia o arquivo READEME para mais informações
+}
+Shortcut=D, SetIP.exe, , , SetIP_1.01, ico.ico

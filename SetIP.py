@@ -8,6 +8,7 @@ import sys
 def notas():
     print('''
     Alterar o método de detecção de slot desabilitado
+    Criar arquivo de configuração caso não exista
     
     
     ''')
