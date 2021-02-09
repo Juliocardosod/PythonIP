@@ -6,7 +6,8 @@ from configparser import ConfigParser
 import sys
 
 cfg = ConfigParser()
-print (cfg.read('config.ini'))
+#print (cfg.read('config.ini'))
+cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
 versao = '1.02 beta'
 data = 'Jan 21'
 
