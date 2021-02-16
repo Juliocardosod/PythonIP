@@ -7,8 +7,7 @@ import sys
 
 def notas():
     print('''
-    Alterar o método de detecção de slot desabilitado
-    #Criar arquivo de configuração caso não exista
+
     
     
     ''')
@@ -16,10 +15,8 @@ def notas():
 cfg = ConfigParser()
 #print (cfg.read('config.ini'))
 
-
-
-versao = '1.02 beta'
-data = 'Jan 21'
+versao = '1.02'
+data = 'Fev 21'
 
 os.system("mode con cols=63 lines=30")
 
@@ -166,23 +163,23 @@ def VAZIO():
         os.system('cls')
 
 def predefinido(): #Menu predefinido integrado ao arquivo config.ini
-
+    os.system("color 0f")
 
     print('''
 
     -----------------------------------------------------
 
-          Menu Predefinido
+            MENU PREDEFINIDO
 
-          (1) {}
-          (2) {}
-          (3) {}
-          (4) {}
-          (5) {}
-          (6) {}
-          (7) {}
-          (8) {}
-          (9) VOLTAR        "set" para alterar um slot
+            (1) {}
+            (2) {}
+            (3) {}
+            (4) {}
+            (5) {}
+            (6) {}
+            (7) {}
+            (8) {}
+            (9) VOLTAR    "set" para alterar um slot
 
     -----------------------------------------------------
     '''.format(cfg.get('SLOT_1','NAME'), cfg.get('SLOT_2','NAME'), cfg.get('SLOT_3','NAME'), cfg.get('SLOT_4','NAME'),
@@ -194,7 +191,8 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
         listaEC = ['1', '2', '3', '4', '5', '6','7', '8']
 
         if ec in listaEC:
-            if (cfg.get('SLOT_{}'.format(ec),'IP')) == 'VAZIO':
+            teste = cfg.get('SLOT_{}'.format(ec),'IP')
+            if teste == "":
                 VAZIO()
                 predefinido()
             else:
@@ -281,8 +279,9 @@ def servicos(): #Menu de serviços
         listaES = ['1', '2', '3', '4', '5', '6', '7', '8']
 
         if es in listaES:
+            testeSRV = cfg.get('SRV_{}'.format(es),'SRV')
 
-            if (cfg.get('SRV_{}'.format(es),'SRV')) == 'VAZIO':
+            if testeSRV == "":
                 VAZIO()
                 servicos()
             else:
@@ -360,12 +359,14 @@ def intMan(): #Menu de gerenciamento de interface
             intMan()
     except KeyboardInterrupt:
         os.system('cls')
-        
+
 def sai():
     input('\nAté a próxima! ;)')
     exit()
 
 def CMD():
+    os.system("color 0f")
+    
     try:
         cmd = input('CMD>')
         if cmd == 'exit':
@@ -449,12 +450,15 @@ def intChange(Intf): #Menu para seleção de interface
         intChange(Intf)
 
 def historico():
+    os.system("color 0c")
     input('''
 
     -----------------------------------------------------
 
     Versão 1.02 - Jan 21
-    Configuração de slots predefinidos pelo programa (utilizando 'set')
+    Configuração de slots predefinidos pelo programa 
+    (utilizando 'set')
+
     Criação de arquivo config.ini (caso não exista)
     Aprimoramentos de estabilidade
 
@@ -473,6 +477,7 @@ def historico():
     os.system('cls')
 
 def sobre(): #Sobre o programa
+    os.system("color 0c")
     input('''
 
     -----------------------------------------------------
@@ -500,6 +505,7 @@ cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
 Interface = cfg.get('INTERFACES','PRINCIPAL')
 
 while True: #Menu principal
+    os.system("color 0f")
     print('''
 
     -----------------------------------------------------
@@ -516,6 +522,8 @@ while True: #Menu principal
             (6) MENU PREDEFINIDO
             (7) ALTERAR INTERFACE
             (8) HABILITAR / DESABILITAR INTERFACE
+            (SRV) MENU DE SERVIÇOS
+            (CMD) CONSOLE
             (9) SAIR
 
             (Sobre)                     Versão {}
