@@ -8,18 +8,18 @@ import sys
 def notas():
     print('''
     Alterar o método de detecção de slot desabilitado
-    Criar arquivo de configuração caso não exista
+    #Criar arquivo de configuração caso não exista
     
     
     ''')
 
 cfg = ConfigParser()
 #print (cfg.read('config.ini'))
-cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
+
+
+
 versao = '1.02 beta'
 data = 'Jan 21'
-
-Interface = cfg.get('INTERFACES','PRINCIPAL')
 
 os.system("mode con cols=63 lines=30")
 
@@ -47,12 +47,72 @@ else:
 
 def createCFG(): #Criar arquivo de configuração caso não exista
     try:
-        print('Arquivo de configuração (config.ini) não encontrado! \nCriando novo arquivo...')
-        input('Código')
-        ##cfg = configparser.ConfigParser() if not config.has_section("INFO"): config.add_section("INFO") config.set("INFO", "link", "www.codeforests.com") config.set("INFO", "name", "ken") with open("example.ini", 'w') as configfile: config.write(configfile)
-        os.system('cls')        
-    except Exception as e: input(e)
+        if os.path.isfile('config.ini'):
+            os.system('cls')
+        else:
+            print('Arquivo de configuração (config.ini) não encontrado! \nCriando novo arquivo...')
+            cfg['DEFAULT'] = {'DNS': '8.8.8.8'}
+            cfg['IPauto'] = {'MASK': '255.255.255.0',
+                                'HOST': '253',
+                                'GATE': '254'}
+            cfg['INTERFACES'] = {'PRINCIPAL': 'Ethernet',
+                                'SECUNDARIA': 'Wi-Fi'}
+            cfg['SLOT_1'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_2'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_3'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_4'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_5'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_6'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_7'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SLOT_8'] = {'NAME': '',
+                                'IP': '',
+                                'MASK': '',
+                                'GATE': ''}
+            cfg['SRV_1'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_2'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_3'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_4'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_5'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_6'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_7'] = {'NOME': '',
+                                'SRV': ''}
+            cfg['SRV_8'] = {'NOME': '',
+                                'SRV': ''}
+            with open('config.ini', 'w') as configfile:
+                cfg.write(configfile)
+            os.system('cls')
+    except Exception as e: 
+        input(e)
+        os.system('cls')
 
+createCFG()
 
 def setSlot(slot):    #Editar arquivo de configuração
     try:
@@ -141,6 +201,7 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
                 setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
                 setDNS(cfg.get('DEFAULT','DNS'))
                 os.system('cls')
+
 
         elif ec == '9':
             os.system('cls')
@@ -393,7 +454,7 @@ def historico():
     -----------------------------------------------------
 
     Versão 1.02 - Jan 21
-    Configuração de slots predefinidos pelo programa
+    Configuração de slots predefinidos pelo programa (utilizando 'set')
     Criação de arquivo config.ini (caso não exista)
     Aprimoramentos de estabilidade
 
@@ -434,6 +495,9 @@ def sobre(): #Sobre o programa
 
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
+
+cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
+Interface = cfg.get('INTERFACES','PRINCIPAL')
 
 while True: #Menu principal
     print('''
